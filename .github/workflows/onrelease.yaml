@@ -43,8 +43,14 @@ jobs:
       - name: Install dependencies
         run: pip install -U -r dev-requirements.txt
       
+      - uses: peterjgrainger/action-create-branch@v2.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: ${{ env.GITHUB_REF_SLUG }}
+
       - name: Release Code to Production
-        run: databricks repos update --path=/Repos/Production/databricks-repos-ci-demo --branch=main
+        run: databricks repos update --path=/Repos/Production/databricks-repos-ci-demo --branch=${{ env.GITHUB_REF_SLUG }}
 
       - name: Deploy the job
         run: |
