@@ -47,10 +47,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          branch: ${{ env.GITHUB_REF_SLUG }}
+          branch: release-${{ env.GITHUB_REF_SLUG }}
 
       - name: Release Code to Production
-        run: databricks repos update --path=/Repos/Production/databricks-repos-ci-demo --branch=${{ env.GITHUB_REF_SLUG }}
+        run: databricks repos update --path=/Repos/Production/databricks-repos-ci-demo --branch=release-${{ env.GITHUB_REF_SLUG }}
 
       - name: Deploy the job
         run: |
